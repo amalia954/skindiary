@@ -1,0 +1,7 @@
+{
+  "name": "glowup-fixed",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

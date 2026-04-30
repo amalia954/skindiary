@@ -1,0 +1,30 @@
+buildscript {
+  repositories {
+    google()
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:8.3.2'
+    classpath 'com.google.gms:google-services:4.4.0'
+  }
+}
+
+// TAMBAHKAN BLOK INI DI SINI
+allprojects {
+  repositories {
+    google()
+    mavenCentral()
+  }
+  // Definisi variabel agar file app/build.gradle tidak error
+  ext {
+    compileSdkVersion = 35
+    targetSdkVersion = 35
+    minSdkVersion = 24
+    androidxAppCompatVersion = "1.6.1"
+    androidxCoordinatorLayoutVersion = "1.2.0"
+    coreSplashScreenVersion = "1.0.1"
+    junitVersion = "4.13.2"
+    androidxJunitVersion = "1.1.5"
+    androidxEspressoCoreVersion = "3.5.1"
+  }
+}

@@ -1,0 +1,29 @@
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+
+:root {
+  --ion-font-family: 'Plus Jakarta Sans', sans-serif !important;
+  --primary-pink: #ff69b4;
+}
+
+/* PAKSA SEMUA BG JADI PUTIH POLOS */
+ion-content {
+  --background: #ffffff !important;
+  background: #ffffff !important;
+}
+
+/* Pastikan Tab Bar juga bersih */
+ion-tab-bar {
+  --background: #ffffff;
+  border-top: 1px solid #f0f0f0;
+}

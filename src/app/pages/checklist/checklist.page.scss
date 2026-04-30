@@ -1,0 +1,88 @@
+ion-content {
+  --background: #ffffff !important; 
+}
+
+.container-utama {
+  margin: 0;
+  padding: 0;
+}
+
+/* HEADER: SEKARANG JADI STICKY & TIDAK KOTAK */
+.header-routine-style {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #ffffff; /* Supaya saat scroll, konten di belakangnya tertutup putih */
+  
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(255, 182, 193, 0.1); 
+  margin-bottom: 0; 
+
+  .gradient-box {
+    background: linear-gradient(180deg, #f6ccd7 0%, #ffffff 100%);
+    padding: 45px 20px 35px; /* Disesuaikan agar proporsinya cantik */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+      color: #ff85a2; 
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  }
+}
+
+.main-content {
+  padding: 25px 20px 40px 20px; /* Jarak aman di bawah header yang melengkung */
+  position: relative;
+  z-index: 1;
+}
+
+.judul-rutin {
+  font-weight: 800;
+  color: #444;
+  margin: 0 0 12px 10px;
+  font-size: 1rem;
+}
+
+/* KOTAK LIST CHECKLIST */
+.card-putih {
+  background: #ffffff;
+  border-radius: 25px;
+  padding: 5px 18px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05); 
+  margin-bottom: 25px;
+  border: 1px solid rgba(255, 192, 203, 0.2);
+}
+
+ion-checkbox {
+  --background: transparent;
+  --border-color: #ff8fa3;
+  --checkbox-background-checked: #ff8fa3;
+  --border-color-checked: #ff8fa3;
+  --border-radius: 50%;
+  width: 100%;
+  padding: 14px 0;
+  border-bottom: 1px solid #fdf2f5;
+  
+  &:last-child { border-bottom: none; }
+  
+  h3 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #333;
+
+    &.coret {
+      text-decoration: line-through;
+      color: #ccc;
+    }
+  }
+}

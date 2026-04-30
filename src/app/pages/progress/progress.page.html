@@ -1,0 +1,81 @@
+<ion-content [fullscreen]="true" [scrollEvents]="true">
+  <div class="container-utama">
+    
+    <div class="header-routine-style">
+      <div class="gradient-box">
+        <h1>Progres</h1>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="card-putih">
+        <div class="goal-header">
+          <span class="label">Pencapaian (Bulan {{ currentMonth }})</span>
+          <span class="percent-text">{{ progressPercent }}%</span> 
+        </div>
+        <ion-progress-bar [value]="progressPercent / 100"></ion-progress-bar>
+        
+        <ion-button expand="block" (click)="addJourney()" class="btn-catat">
+          CATAT RUTINITAS
+        </ion-button>
+      </div>
+
+      <h3 class="section-title">Catatan</h3>
+      <div class="card-putih no-padding">
+        <textarea 
+          placeholder="Tulis kondisi kulitmu hari ini..." 
+          class="notes-input"
+          [(ngModel)]="newNote">
+        </textarea>
+        <div class="footer-notes">
+          <span class="btn-simpan" (click)="saveNote()">SIMPAN CATATAN</span>
+        </div>
+      </div>
+
+      <h3 class="section-title">Aktivitas</h3>
+      <div class="activity-container">
+        <div class="activity-item" *ngFor="let h of history">
+          <div class="log-content">
+            <div class="log-header">
+              <span class="date">{{ h.date }}</span>
+              
+              <div class="icons">
+                <ion-icon 
+                  name="trash-outline" 
+                  (click)="deleteSingleHistory(h)" 
+                  style="color: #ff8fa3; margin-right: 12px; font-size: 1.1rem; cursor: pointer;">
+                </ion-icon>
+
+                <ion-icon *ngIf="h.morning" name="sunny" color="warning"></ion-icon>
+                <ion-icon *ngIf="h.night" name="moon" color="tertiary"></ion-icon>
+                <ion-icon *ngIf="h.isNote" name="document-text" class="icon-pink"></ion-icon>
+              </div>
+              </div>
+
+            <div *ngIf="h.morning" style="margin-top: 8px;">
+              <p class="desc">☀️ <b>Pagi:</b> Rutinitas selesai.</p>
+              <div class="steps-list">
+                <span class="step-tag" *ngFor="let s of h.morningSteps">✓ {{ s }}</span>
+              </div>
+            </div>
+
+            <div *ngIf="h.night" style="margin-top: 10px; border-top: 1px dashed #eee; padding-top: 8px;">
+              <p class="desc">🌙 <b>Malam:</b> Rutinitas selesai.</p>
+              <div class="steps-list">
+                <span class="step-tag" *ngFor="let s of h.nightSteps">✓ {{ s }}</span>
+              </div>
+            </div>
+
+            <p class="desc" *ngIf="h.isNote" style="font-style: italic; color: #666; margin-top: 5px;">
+              "{{ h.message }}"
+            </p>
+          </div>
+        </div>
+
+        <p *ngIf="history.length === 0" style="text-align: center; color: #ccc; margin-top: 20px;">
+          Belum ada riwayat aktivitas.
+        </p>
+      </div> 
+    </div> 
+  </div> 
+</ion-content>

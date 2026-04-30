@@ -1,0 +1,40 @@
+<ion-content [fullscreen]="true" [scrollEvents]="true">
+  <div class="container-utama">
+    
+    <div class="header-routine-style">
+      <div class="gradient-box">
+        <h1>Ceklist Rutinitas</h1>
+      </div>
+    </div>
+
+    <div class="main-content">
+      
+      <div class="judul-rutin">Skincare Pagi Ceklist</div>
+      <div class="card-putih">
+        <div class="item-ceklis" *ngFor="let item of morningChecklist">
+        <ion-checkbox 
+          labelPlacement="end" 
+          [(ngModel)]="item.isDone" 
+          (ionChange)="updateStorage('Pagi')"> <div class="teks-item">
+            <h3 [class.coret]="item.isDone">{{ item.title }}</h3>
+          </div>
+        </ion-checkbox>
+        </div>
+      </div>
+
+      <div class="judul-rutin">Skincare Malam</div>
+      <div class="card-putih">
+        <div class="item-ceklis" *ngFor="let item of nightChecklist">
+        <ion-checkbox 
+          labelPlacement="end" 
+          [(ngModel)]="item.isDone" 
+          (ionChange)="updateStorage('Malam')"> <div class="teks-item">
+            <h3 [class.coret]="item.isDone">{{ item.title }}</h3>
+          </div>
+        </ion-checkbox>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ion-content>

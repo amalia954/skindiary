@@ -1,0 +1,114 @@
+ion-content {
+  --padding-top: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+  --background: #ffffff !important;
+}
+
+.header-routine-style {
+  /* EFEK STICKY: Menempel di atas saat scroll */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #ffffff; /* Penahan agar konten di bawah tidak tembus saat scroll */
+  
+  /* LENGKUNGAN ROUNDED */
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  overflow: hidden;
+  
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); 
+  margin-bottom: 0; /* Di-nolkan karena padding diatur di main-content */
+
+  .gradient-box {
+    /* Warna tetap sesuai permintaanmu */
+    background: linear-gradient(180deg, #f6ccd7 0%, #ffffff 100%);
+    
+    padding: 50px 20px 40px; /* Padding atas ditambah sedikit biar lebih lega */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    h1 {
+      color: #ff85a2; 
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    p {
+      color: #ffaec0;
+      margin: 4px 0 0 0;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+  }
+}
+
+.main-content {
+  padding: 10px 20px 40px; 
+  position: relative;
+  z-index: 1; /* Di bawah header */
+}
+
+.judul-rutin {
+  font-weight: 800;
+  color: #444;
+  margin: 25px 0 15px 5px; 
+  font-size: 1.1rem;
+}
+
+.list-item-wrapper {
+  /* Menambahkan sedikit shadow pada kotak list agar lebih estetik */
+  background: #fff;
+  border-radius: 15px;
+}
+
+.item-skincare {
+  display: flex;
+  align-items: center;
+  padding: 16px 5px;
+  border-bottom: 1px solid #f9f9f9;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .angka {
+    background: #ff8fa3;
+    color: white;
+    min-width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    margin-right: 15px;
+    font-size: 0.9rem;
+
+    &.malam {
+      background: #6a82fb;
+    }
+  }
+
+  .tulisan {
+    h3 {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #333;
+    }
+    p {
+      margin: 1px 0 0;
+      font-size: 0.78rem;
+      color: #aaa;
+      line-height: 1.3;
+    }
+  }
+}

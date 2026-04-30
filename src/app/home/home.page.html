@@ -1,0 +1,33 @@
+<ion-content [fullscreen]="true" [scrollEvents]="true">
+  <div class="header-routine-style">
+    <div class="gradient-box">
+      <h1>Skincare Rutinitas</h1>
+      <p>Langkah kecil menuju kulit sehat impianmu!</p>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="judul-rutin">Skincare Pagi</div>
+    
+    <div class="list-item-wrapper">
+      <div class="item-skincare" *ngFor="let item of morningSteps">
+        <div class="angka">{{ item.step }}</div>
+        <div class="tulisan">
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.desc }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="judul-rutin">Skincare Malam</div>
+    <div class="list-item-wrapper">
+      <div class="item-skincare" *ngFor="let item of nightSteps">
+        <div class="angka malam">{{ item.step }}</div>
+        <div class="tulisan">
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.desc }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

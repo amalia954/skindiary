@@ -1,0 +1,30 @@
+ion-tab-bar {
+  --background: #ffffff;
+  --border: none;
+  height: 65px;
+  border-radius: 20px 20px 0 0; // Sudut atas melengkung biar soft
+  box-shadow: 0 -5px 20px rgba(255, 133, 162, 0.1); // Shadow pink tipis ke arah atas
+  padding-bottom: env(safe-area-inset-bottom); // Biar aman di iPhone/HP layar penuh
+}
+
+ion-tab-button {
+  --color: #a0a0a0; // Warna icon saat tidak aktif
+  --color-selected: #ff85a2; // Warna pink saat aktif
+  
+  ion-icon {
+    font-size: 24px;
+    margin-bottom: 2px;
+    transition: transform 0.3s ease;
+  }
+
+  &.tab-selected {
+    ion-icon {
+      transform: translateY(-2px); // Efek naik dikit pas dipilih
+    }
+  }
+
+  ion-label {
+    font-size: 11px;
+    font-weight: 600;
+  }
+}

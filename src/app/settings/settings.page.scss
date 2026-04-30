@@ -1,0 +1,118 @@
+ion-content { 
+  --background: #ffffff !important; 
+  --inner-scroll-height: 100%;
+}
+
+/* HEADER PINK MELENGKUNG */
+.header-routine-style {
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02); 
+  margin-bottom: 0;
+
+  .gradient-box {
+    background: linear-gradient(180deg, #f6ccd7 0%, #ffffff 100%);
+    padding: 35px 20px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+      color: #ff85a2; 
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  }
+}
+
+/* PEMBUNGKUS UTAMA - Biar footer bisa nempel di dasar tanpa scroll */
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 120px); /* Menghitung tinggi layar dikurangi header & tab bar */
+  justify-content: space-between; /* Ini triknya: Konten di atas, footer di bawah */
+  padding: 20px;
+}
+
+.content-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.card-putih {
+  background: #ffffff;
+  border-radius: 25px;
+  padding: 30px 20px;
+  box-shadow: 0 5px 20px rgba(255, 182, 193, 0.15);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+
+  h3 {
+    color: #333;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: #888;
+    font-size: 0.85rem;
+    margin-bottom: 25px;
+    font-style: italic; /* INI BIAR TULISANNYA MIRING LAGI */
+  }
+}
+
+.btn-reset {
+  width: 100%;
+  background: #ff85a2; 
+  color: #ffffff;
+  border: none;
+  border-radius: 18px;
+  padding: 16px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 15px rgba(255, 133, 162, 0.3);
+  
+  &:active {
+    background: #ff4d94;
+    transform: scale(0.96);
+  }
+}
+
+.fixed-footer {
+  position: fixed;
+  /* Kita turunkan sedikit lagi dari 75px ke 60px/65px */
+  bottom: 65px; 
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 999;
+  /* Penting: Hapus background putih kalau mau tulisannya kelihatan 'nyatu' sama layar */
+  background: transparent; 
+  padding: 0;
+
+  p {
+    margin: 0;
+    color: #a0a0a0;
+    font-size: 0.7rem;
+    b { color: #ff8fa3; }
+  }
+  
+  span {
+    display: block;
+    font-size: 0.6rem;
+    color: #ccc;
+    margin-top: -2px; /* Biar versi v1.0.0 lebih rapet ke nama kamu */
+  }
+}
+
+/* Pastikan teks peringatan di kartu miring lagi */
+.card-putih p {
+  font-style: italic !important;
+}
