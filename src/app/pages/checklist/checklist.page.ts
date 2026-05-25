@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -33,42 +33,63 @@ export class ChecklistPage implements OnInit {
     { title: 'Eye Cream', isDone: false }
   ];
 
-  constructor() {}
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.loadData();
     localStorage.setItem('active_tab', 'Pagi'); 
+    // KUNCI BEBAS KEDIP: Kita tidak panggil loadDataDirectly() di sini lagi!
   }
 
-  // FUNGSI SAKTI: Supaya centang otomatis update pas pindah tab
   ionViewWillEnter() {
-    this.loadData();
-  }
-
-  loadData() {
-  const savedMorning = localStorage.getItem('morning_data');
-  const savedNight = localStorage.getItem('night_data');
-  const lastResetDate = localStorage.getItem('last_reset_date');
-  
-  // Ambil tanggal hari ini (contoh: "2026-04-29")
-  const today = new Date().toLocaleDateString('en-CA'); 
-
-  // 1. Cek apakah ini hari baru?
-  if (lastResetDate !== today) {
-    // RESET SEMUA: Balikin isDone ke false karena ganti hari
-    this.morningChecklist.forEach(item => item.isDone = false);
-    this.nightChecklist.forEach(item => item.isDone = false);
+    // 1. CEK SAKELAR PALING ATAS
+    const paksaBersih = localStorage.getItem('clear_visual_now');
     
-    // Simpan tanggal hari ini sebagai tanda sudah direset
-    localStorage.setItem('last_reset_date', today);
-    this.saveToStorage(); 
-  } else {
-    // 2. Kalau hari yang sama, baru muat data yang tersimpan
-    if (savedMorning) this.morningChecklist = JSON.parse(savedMorning);
-    if (savedNight) this.nightChecklist = JSON.parse(savedNight);
+    if (paksaBersih === 'true') {
+      this.morningChecklist.forEach(item => item.isDone = false);
+      this.nightChecklist.forEach(item => item.isDone = false);
+      
+      localStorage.setItem('morning_data', JSON.stringify(this.morningChecklist));
+      localStorage.setItem('night_data', JSON.stringify(this.nightChecklist));
+      
+      this.cdr.detectChanges();
+      return; 
+    }
+
+    // 2. JALUR BACA DATA NORMAL
+    const savedMorning = localStorage.getItem('morning_data');
+    const savedNight = localStorage.getItem('night_data');
+    
+    if (savedMorning) {
+      const parsedMorning = JSON.parse(savedMorning);
+      this.morningChecklist.forEach((item, index) => {
+        if (parsedMorning[index]) item.isDone = parsedMorning[index].isDone;
+      });
+    } else {
+      this.morningChecklist.forEach(item => item.isDone = false);
+    }
+
+    if (savedNight) {
+      const parsedNight = JSON.parse(savedNight);
+      this.nightChecklist.forEach((item, index) => {
+        if (parsedNight[index]) item.isDone = parsedNight[index].isDone;
+      });
+    } else {
+      this.nightChecklist.forEach(item => item.isDone = false);
+    }
+
+    // 3. RESET HARIAN OTOMATIS
+    const lastResetDate = localStorage.getItem('last_reset_date');
+    const today = new Date().toLocaleDateString('en-CA'); 
+    if (lastResetDate !== today) {
+      this.morningChecklist.forEach(item => item.isDone = false);
+      this.nightChecklist.forEach(item => item.isDone = false);
+      localStorage.setItem('last_reset_date', today);
+      this.saveToStorage(); 
+    }
+
+    this.cdr.detectChanges();
   }
-}
-  // Dipanggil saat user klik centang di HTML
+
   updateStorage(sesi: string) {
     this.currentTab = sesi;
     localStorage.setItem('active_tab', sesi); 

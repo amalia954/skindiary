@@ -4,11 +4,12 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'landing', // DIUBAH: Dari 'tabs' jadi 'landing' supaya muncul duluan
-    pathMatch: 'full'
+    // LANGSUNG MUAT LANDING DI SINI (Tanpa redirectTo)
+    loadComponent: () => import('./landing/landing.page').then(m => m.LandingPage)
   },
   {
     path: 'landing',
+    // Biarkan ini ada atau hapus tidak masalah, tapi arahkan ke komponen yang sama
     loadComponent: () => import('./landing/landing.page').then(m => m.LandingPage)
   },
   {

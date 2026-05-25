@@ -2,14 +2,14 @@ ion-tab-bar {
   --background: #ffffff;
   --border: none;
   height: 65px;
-  border-radius: 20px 20px 0 0; // Sudut atas melengkung biar soft
-  box-shadow: 0 -5px 20px rgba(255, 133, 162, 0.1); // Shadow pink tipis ke arah atas
-  padding-bottom: env(safe-area-inset-bottom); // Biar aman di iPhone/HP layar penuh
+  border-radius: 20px 20px 0 0; // Sudut atas melengkung tetap dipertahankan
+  box-shadow: 0 -5px 20px rgba(255, 133, 162, 0.1); // Shadow pink tipis kamu
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 ion-tab-button {
-  --color: #a0a0a0; // Warna icon saat tidak aktif
-  --color-selected: #ff85a2; // Warna pink saat aktif
+  --color: #a0a0a0; // Warna abu-abu saat mati
+  --color-selected: #ff85a2; // Warna pink kamu saat aktif
   
   ion-icon {
     font-size: 24px;
@@ -17,9 +17,29 @@ ion-tab-button {
     transition: transform 0.3s ease;
   }
 
+  // Desain efek naik dikit pas dipilih milikmu tetap aman
   &.tab-selected {
     ion-icon {
-      transform: translateY(-2px); // Efek naik dikit pas dipilih
+      transform: translateY(-2px);
+      color: #ff85a2 !important; // Paksa ikon jadi pink jika benar-benar aktif
+    }
+    ion-label {
+      color: #ff85a2 !important; // Paksa label jadi pink jika benar-benar aktif
+    }
+  }
+
+  // ==========================================
+  // JURUS KUNCI BARU: ANTI PINK DOBEL
+  // ==========================================
+  // Jika tombol TIDAK MEMILIKI class 'tab-selected', 
+  // paksa ikon dan teksnya kembali abu-abu, tidak boleh ikut-ikutan pink!
+  &:not(.tab-selected) {
+    ion-icon {
+      transform: translateY(0); // Kembalikan posisi ikon ke normal
+      color: #a0a0a0 !important; 
+    }
+    ion-label {
+      color: #a0a0a0 !important;
     }
   }
 

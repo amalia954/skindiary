@@ -3,17 +3,19 @@ ion-content {
   --inner-scroll-height: 100%;
 }
 
-/* HEADER PINK MELENGKUNG */
+/* HEADER PINK MELENGKUNG (PERBAIKAN JUDUL TERLALU KE ATAS) */
 .header-routine-style {
   border-bottom-left-radius: 40px;
   border-bottom-right-radius: 40px;
   overflow: hidden;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02); 
   margin-bottom: 0;
+  width: 100%;
 
   .gradient-box {
     background: linear-gradient(180deg, #f6ccd7 0%, #ffffff 100%);
-    padding: 35px 20px; 
+    /* PERBAIKAN: Padding atas ditambah jadi 55px supaya teks RIWAYAT turun pas di tengah */
+    padding: 55px 20px 35px 20px; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,22 +31,18 @@ ion-content {
   }
 }
 
-/* PEMBUNGKUS UTAMA - Biar footer bisa nempel di dasar tanpa scroll */
-.main-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: calc(100vh - 120px); /* Menghitung tinggi layar dikurangi header & tab bar */
-  justify-content: space-between; /* Ini triknya: Konten di atas, footer di bawah */
-  padding: 20px;
-}
-
-.content-top {
+/* Biarkan .main-content kembali ke setelan awal kamu yang paling rapi */
+.main-content {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 30px; 
 }
 
+/* KOTAK PUTIH */
 .card-putih {
   background: #ffffff;
   border-radius: 25px;
@@ -53,21 +51,28 @@ ion-content {
   width: 100%;
   max-width: 400px;
   text-align: center;
+  height: auto !important; 
 
   h3 {
     color: #333;
     font-weight: 800;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   }
 
   p {
     color: #888;
     font-size: 0.85rem;
-    margin-bottom: 25px;
-    font-style: italic; /* INI BIAR TULISANNYA MIRING LAGI */
+    margin-top: 20px; 
+    margin-bottom: 0;
+    font-style: italic !important;
+    white-space: normal !important; 
+    word-break: break-word !important;
+    line-height: 1.4;
+    width: 100%;
   }
 }
 
+/* TOMBOL RESET */
 .btn-reset {
   width: 100%;
   background: #ff85a2; 
@@ -85,15 +90,14 @@ ion-content {
   }
 }
 
+/* FOOTER NAMA & VERSI */
 .fixed-footer {
   position: fixed;
-  /* Kita turunkan sedikit lagi dari 75px ke 60px/65px */
   bottom: 65px; 
   left: 0;
   right: 0;
   text-align: center;
   z-index: 999;
-  /* Penting: Hapus background putih kalau mau tulisannya kelihatan 'nyatu' sama layar */
   background: transparent; 
   padding: 0;
 
@@ -108,11 +112,6 @@ ion-content {
     display: block;
     font-size: 0.6rem;
     color: #ccc;
-    margin-top: -2px; /* Biar versi v1.0.0 lebih rapet ke nama kamu */
+    margin-top: -2px;
   }
-}
-
-/* Pastikan teks peringatan di kartu miring lagi */
-.card-putih p {
-  font-style: italic !important;
 }

@@ -8,46 +8,48 @@
 .pattern-overlay {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
-  // SVG Pattern dedaunan sangat samar (transparansi 3%)
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffb5a7' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   z-index: 1;
+}
+
+// KUNCI UTAMA: Bungkus semua konten agar membagi layar secara pas menggunakan Flexbox
+ion-content {
+  display: flex;
+  flex-direction: column;
 }
 
 // Header melengkung pink premium
 .home-style-header {
   background: #ffdeeb; // Pink lembut
-  height: 38vh; // Sedikit lebih tinggi biar mewah
+  
+  // PERBAIKAN: Gunakan flex proporsional, bukan vh statis lagi
+  flex: 4; 
+  min-height: 280px; // Batas aman tinggi minimum header pink
+  
   display: flex;
   align-items: center;
   justify-content: center;
   border-bottom-left-radius: 70px;
   border-bottom-right-radius: 70px;
   position: relative;
-  z-index: 2; // Di atas pattern
-  box-shadow: 0 10px 30px rgba(255, 183, 197, 0.15); // Shadow pink sangat soft
+  z-index: 2; 
+  box-shadow: 0 10px 30px rgba(255, 183, 197, 0.15); 
 
-  // Lingkaran putih tempat logo (sekarang 'mengapung')
+  // Lingkaran putih tempat logo
   .logo-wrapper {
     background: white;
     padding: 15px;
     border-radius: 50%;
-    
-    // Ukuran yang kita sepakati (Gede Pas)
     width: 170px;
     height: 170px;
-    
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    // EFEK SHADOW PINK: Bikin mengapung
     box-shadow: 0 15px 35px rgba(255, 133, 162, 0.12);
-    
-    // Efek transisi halus saat loading
     animation: floatIn 1s ease-out;
 
     .app-logo-img {
-      max-width: 145px; // Foto naik dikit dari 130px biar detail kelihatan
+      max-width: 145px; 
       height: auto;
       display: block;
       object-fit: contain;
@@ -55,34 +57,44 @@
   }
 }
 
-// Container utama (Konten)
+// Container utama (Konten Teks & Tombol)
 .main-container {
+  // PERBAIKAN: Berikan ruang flex yang seimbang dengan header atas
+  flex: 5; 
+  
   display: flex;
   flex-direction: column;
-  justify-content: space-around; // Jarak antar teks dan tombol lebih proporsional
-  height: 55vh; 
-  padding: 0 35px;
+  
+  // PERBAIKAN: Dorong teks ke atas dan tombol ke paling bawah secara otomatis & presisi
+  justify-content: space-between; 
+  
+  padding: 40px 35px 10px 35px; /* Padding atas disesuaikan, padding bawah 30px mengunci jarak tombol dari dasar layar */
   position: relative;
-  z-index: 2; // Di atas pattern
+  z-index: 2; 
 }
 
-// Teks Utama (SkinTrack)
+// Teks Utama (SkinDiary)
 .text-section {
-  .title {
-  font-size: 2.6rem !important;
-  font-weight: 800 !important;
-  color: #5d4149 !important; /* Pakai !important biar gak bisa ditolak */
-  margin-bottom: 8px !important;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Memastikan teks judul & subtitle selalu berada tepat di tengah area putih */
 
-  .highlight { 
-    color: #ff85a2 !important; /* Biar kata 'Track' tetep pink */
+  .title {
+    font-size: 2.6rem !important;
+    font-weight: 800 !important;
+    color: #5d4149 !important; 
+    margin-bottom: 8px !important;
+
+    .highlight { 
+      color: #ff85a2 !important; 
+    }
   }
-}
 
   .subtitle {
-    color: #a0a0a0; // Grey sedikit lebih soft
+    color: #a0a0a0; 
     font-size: 1.1rem;
-    line-height: 1.7; // Spasi antar baris lebih lega
+    line-height: 1.7; 
     font-weight: 400;
   }
 }
@@ -90,23 +102,21 @@
 // Tombol 'Mulai Sekarang' (Berjarak Manis)
 .button-section {
   padding: 0 5px;
-  margin-bottom: 20px; // Jarak aman ke dasar layar
+  margin-top: auto; /* Memastikan bagian tombol benar-benar mengunci diri di area bawah container */
 
   .glow-btn {
-    --background: #ff85a2; // Pink aksen utama
+    --background: #ff85a2; 
     --background-activated: #ff6b8d;
-    --border-radius: 20px; // Sedikit lebih membulat
+    --border-radius: 20px; 
     --color: white;
     height: 60px;
     font-weight: 700;
-    font-size: 1.15rem; // Sedikit lebih besar
-    
-    // Shadow tombol yang 'glow'
+    font-size: 1.15rem; 
     box-shadow: 0 12px 25px rgba(255, 133, 162, 0.3); 
   }
 }
 
-// Animasi masuk logo biar estetik
+// Animasi masuk logo
 @keyframes floatIn {
   0% { transform: translateY(20px); opacity: 0; }
   100% { transform: translateY(0); opacity: 1; }

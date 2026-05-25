@@ -14,11 +14,8 @@ export class SettingsPage {
     private toastController: ToastController
   ) { }
 
-  // FUNGSI INI YANG DIPANGGIL DI HTML
   async confirmDeleteHistory() {
     const dataMentah = localStorage.getItem('skin_history');
-    
-    // Cek kalau memang sudah kosong
     if (!dataMentah || dataMentah === '[]') {
       const toast = await this.toastController.create({
         message: 'Riwayat aktivitas kamu sudah kosong! ✨',
@@ -30,49 +27,32 @@ export class SettingsPage {
       return; 
     }
 
-    // SI SATPAM (Konfirmasi)
     const alert = await this.alertController.create({
       header: 'Hapus Riwayat?',
       message: 'Yakin mau bersihkan semua riwayat? Ceklist skincare hari ini juga akan direset ya.',
       buttons: [
-        {
-          text: 'BATAL',
-          role: 'cancel'
-        },
+        { text: 'BATAL', role: 'cancel' },
         {
           text: 'YA, HAPUS',
-          handler: () => {
-            this.runDeleteAll(); // Jalankan fungsi hapus total
-          }
+          handler: () => { this.runDeleteAll(); }
         }
       ]
     });
     await alert.present();
   }
 
-  // FUNGSI EKSEKUSI HAPUS TOTAL
   runDeleteAll() {
-    // 1. Hapus Riwayat
+    // Bersihkan memori dasar sampai bersih total ke akarnya
     localStorage.removeItem('skin_history');
+    localStorage.removeItem('skin_notes');
+    localStorage.removeItem('morning_data'); 
+    localStorage.removeItem('night_data');
+    localStorage.removeItem('last_reset_date');
+    
+    // Pasang penanda kalau data baru saja dihapus bersih
+    localStorage.setItem('clear_visual_now', 'true');
 
-    // 2. Reset Centang Pagi & Malam (Biar Sinkron!)
-    this.resetCeklistSaja('morning_data');
-    this.resetCeklistSaja('night_data');
-
-    // 3. Kasih tau user
     this.showSuccessToast();
-  }
-
-  resetCeklistSaja(key: string) {
-    const dataRaw = localStorage.getItem(key);
-    if (dataRaw) {
-      const data = JSON.parse(dataRaw);
-      const resetData = data.map((item: any) => ({
-        ...item,
-        isDone: false
-      }));
-      localStorage.setItem(key, JSON.stringify(resetData));
-    }
   }
 
   async showSuccessToast() {

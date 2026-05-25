@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ToastController, AlertController } from '@ionic/angular';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ToastController, AlertController, IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-progress',
   templateUrl: './progress.page.html',
   styleUrls: ['./progress.page.scss'],
-  standalone: false,
+  standalone: true,
+  imports: [IonicModule, CommonModule, FormsModule]
 })
 export class ProgressPage implements OnInit {
   progressPercent: number = 0;
@@ -16,15 +19,33 @@ export class ProgressPage implements OnInit {
 
   constructor(
     private toastCtrl: ToastController,
-    private alertCtrl: AlertController 
+    private alertCtrl: AlertController,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    this.loadData();
+    this.ionViewWillEnter();
   }
 
   ionViewWillEnter() {
+    // CEK SAKELAR DI BARIS PALING ATAS
+    const paksaBersih = localStorage.getItem('clear_visual_now');
+    
+    if (paksaBersih === 'true') {
+      this.history = [];
+      this.notes = [];
+      this.progressPercent = 0;
+      this.currentMonth = 1;
+
+      // Hapus sakelar karena tugas pembersihan selesai setelah Progress & Checklist membacanya
+      localStorage.removeItem('clear_visual_now'); 
+      
+      this.cdr.detectChanges();
+      return; // Potong kompas keluar, jangan baca data lama!
+    }
+
     this.loadData();
+    this.cdr.detectChanges();
   }
 
   loadData() {
@@ -43,8 +64,6 @@ export class ProgressPage implements OnInit {
     });
     toast.present();
   }
-
-  // --- BAGIAN LOGIKA HAPUS (KOTAK ANDROID STYLE) ---
 
   async deleteSingleHistory(item: any) {
     if (item.isNote) {
@@ -104,36 +123,36 @@ export class ProgressPage implements OnInit {
       if (type === 'morning') {
         item.morning = false;
         item.morningSteps = [];
-        this.resetCeklistSaja('Pagi'); // Reset centang Pagi
+        this.resetCeklistSaja('Pagi'); 
       } else if (type === 'night') {
         item.night = false;
         item.nightSteps = [];
-        this.resetCeklistSaja('Malam'); // Reset centang Malam
+        this.resetCeklistSaja('Malam'); 
       } else {
-        // Jika pilih SEMUA
         this.history.splice(index, 1);
         this.resetCeklistSaja('Pagi');
         this.resetCeklistSaja('Malam');
       }
 
-      // Jika item jadi kosong melompong, hapus dari list
       if (!item.morning && !item.night && !item.isNote) {
         this.history.splice(index, 1);
       }
 
       localStorage.setItem('skin_history', JSON.stringify(this.history));
+      
+      this.loadData();
       this.calculateProgress();
+      this.cdr.detectChanges(); 
+      
       this.presentToast('Berhasil diperbarui');
     }
   }
 
-  // Tambahkan fungsi pembantu ini di bawahnya
   resetCeklistSaja(sesi: string) {
     const key = sesi === 'Pagi' ? 'morning_data' : 'night_data';
     const dataRaw = localStorage.getItem(key);
     if (dataRaw) {
       const data = JSON.parse(dataRaw);
-      // Bikin semua isDone jadi false lagi
       const resetData = data.map((item: any) => ({
         ...item,
         isDone: false
@@ -147,12 +166,12 @@ export class ProgressPage implements OnInit {
     if (index > -1) {
       this.history.splice(index, 1);
       localStorage.setItem('skin_history', JSON.stringify(this.history));
+      this.loadData();
       this.calculateProgress();
+      this.cdr.detectChanges();
       this.presentToast('Catatan dihapus');
     }
   }
-
-  // --- BAGIAN LOGIKA SIMPAN ---
 
   addJourney() {
     const today = new Date().toLocaleDateString('id-ID', { 
@@ -188,7 +207,9 @@ export class ProgressPage implements OnInit {
     }
 
     localStorage.setItem('skin_history', JSON.stringify(this.history));
+    this.loadData();
     this.calculateProgress();
+    this.cdr.detectChanges();
   }
 
   saveNote() {
@@ -203,6 +224,9 @@ export class ProgressPage implements OnInit {
     
     localStorage.setItem('skin_history', JSON.stringify(this.history));
     this.newNote = '';
+    this.loadData();
+    this.calculateProgress();
+    this.cdr.detectChanges();
     this.presentToast('Catatan disimpan!');
   }
 
